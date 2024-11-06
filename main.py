@@ -1,8 +1,7 @@
 from file_helper import *
-from os import PathLike
 
 
-def choose_working_file(working_files: list[PathLike[bytes] | PathLike[str] | str]) -> PathLike[bytes] | PathLike[str] | str:
+def choose_working_file(working_files: list[LangFileType]) -> LangFileType:
     for i, filename in enumerate(working_files):
         print(f'{i + 1}. {filename}')
 
@@ -26,5 +25,6 @@ def main() -> None:
         case 'txt':
             working_file_converter.txt_to_bin(converted_file_name)
             print('Binary file was created')
+
 
 main()
