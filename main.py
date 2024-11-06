@@ -5,7 +5,7 @@ def choose_working_file(working_files: list[LangFileType]) -> LangFileType:
     for i, filename in enumerate(working_files):
         print(f'{i + 1}. {filename}')
 
-    try:
+    try:  # TODO: fix bug
         file_number = max(0, int(input('Write file number you would like to work: ')) - 1)
         return working_files[file_number]
     except (IndexError, ValueError):
