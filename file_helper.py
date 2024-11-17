@@ -60,7 +60,7 @@ def format_text(text: bytes) -> list[bytes]:
 
         cur_str = text[:cur_index]
         res_list.append(
-            cur_str + f'   Current length: {len(cur_str)}, max length: {len(cur_str) + additional_len}'
+            cur_str + f'    Current length: {len(cur_str)}, max length: {len(cur_str) + additional_len}'
             .encode(encoding=lang_file_encoding)
         )
         format_text(text[new_start_index:])
