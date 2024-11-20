@@ -1,4 +1,5 @@
 from file_helper import *
+from file_helper import format_text
 
 
 def choose_working_file(working_files: list[LangFileType]) -> LangFileType:
@@ -23,8 +24,10 @@ def main() -> None:
             working_file_converter.bin_to_txt(converted_file_name)
             print('Text file was created')
         case 'txt':
-            working_file_converter.txt_to_bin(converted_file_name)
-            print('Binary file was created')
+            text = 'A c h i e v e m e n t s         F o u n d   a   g a m e         '
+            print(format_text(text))
+            # working_file_converter.txt_to_bin(converted_file_name)
+            # print('Binary file was created')
 
 
 main()

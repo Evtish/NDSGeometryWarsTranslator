@@ -41,8 +41,8 @@ def get_file_extension(file: LangFileType) -> str:
     return path.splitext(file)[1][1:]
 
 
-def format_text(text: bytes) -> list[bytes]:
-    found_val = (' ' * 2).encode(encoding=lang_file_encoding)
+def format_text(text: str) -> list[str | None]:
+    found_val = '  '
     res_list = []
     # i = 0
     # while text[i:].find(found_val) != -1:
@@ -50,20 +50,23 @@ def format_text(text: bytes) -> list[bytes]:
 
     try:
         cur_index = text.index(found_val)
-        new_start_index = cur_index + 2
+        new_start_index = cur_index + 3
         additional_len = 0
 
-        while text[new_start_index] == ' ':
-            new_start_index += 1
+        while text[new_start_index:new_start_index + len(found_val)] == found_val:
+            new_start_index += len(found_val)
             additional_len += 1
-        additional_len //= 2
 
-        cur_str = text[:cur_index]
+        cur_str = text[:cur_index].replace(' ', '')
+        # res_list.extend(
+        #     [cur_str + f'    (current length: {len(cur_str)}, max length: {len(cur_str) + additional_len})'] +
+        #     format_text(text[new_start_index:])
+        # )
         res_list.append(
-            cur_str + f'    Current length: {len(cur_str)}, max length: {len(cur_str) + additional_len}'
-            .encode(encoding=lang_file_encoding)
+            cur_str + f' (current length: {len(cur_str)}, max length: {len(cur_str) + additional_len})'
+            # .encode(encoding=lang_file_encoding)
         )
-        format_text(text[new_start_index:])
+        res_list.extend(format_text(text[new_start_index:]))
 
     except ValueError:
         return res_list
