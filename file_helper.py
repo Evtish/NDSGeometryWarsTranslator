@@ -41,35 +41,37 @@ def get_file_extension(file: LangFileType) -> str:
     return path.splitext(file)[1][1:]
 
 
-def format_text(text: str) -> list[str | None]:
-    found_val = '  '
-    res_list = []
-    # i = 0
-    # while text[i:].find(found_val) != -1:
-    #     pass
+def format_text(input_text: str) -> str:
+    # found_val = '  '
+    res_text = ''
+    working_text = input_text
 
-    try:
-        cur_index = text.index(found_val)
-        new_start_index = cur_index + 3
-        additional_len = 0
+    while (cur_index := working_text.find(' ')) != -1:
+        total_spaces_count = 1
+        for ltr in working_text[cur_index + 1:]:
+            if ltr != ' ':
+                break
+            total_spaces_count += 1
 
-        while text[new_start_index:new_start_index + len(found_val)] == found_val:
-            new_start_index += len(found_val)
-            additional_len += 1
+        if total_spaces_count <= 3:
+            remained_spaces_count = total_spaces_count // 2
+            res_text += (
+                    working_text[:cur_index] +
+                    ' ' * remained_spaces_count
+            )
+        elif total_spaces_count > 3:
+            # new_start_index = cur_index + space_count
+            additional_len = (total_spaces_count - 3) // 2
+            cur_str = working_text[:cur_index]
 
-        cur_str = text[:cur_index].replace(' ', '')
-        # res_list.extend(
-        #     [cur_str + f'    (current length: {len(cur_str)}, max length: {len(cur_str) + additional_len})'] +
-        #     format_text(text[new_start_index:])
-        # )
-        res_list.append(
-            cur_str + f' (current length: {len(cur_str)}, max length: {len(cur_str) + additional_len})'
-            # .encode(encoding=lang_file_encoding)
-        )
-        res_list.extend(format_text(text[new_start_index:]))
+            res_text += (
+                cur_str +
+                f' (letters can be added: {additional_len})' +
+                '\n'
+            )
+        working_text = working_text[cur_index + total_spaces_count:]
 
-    except ValueError:
-        return res_list
+    return res_text
 
 
 # def get_binary_code(file_bytes: bytes) -> str:
