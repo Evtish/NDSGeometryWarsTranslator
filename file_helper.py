@@ -41,36 +41,37 @@ def get_file_extension(file: LangFileType) -> str:
     return path.splitext(file)[1][1:]
 
 
-def format_text(input_text: str) -> str:
-    # found_val = '  '
+def format_text(text: str) -> str:
+    found_val = '  '
     res_text = ''
-    working_text = input_text
-
-    while (cur_index := working_text.find(' ')) != -1:
+    while (cur_index := text.find(' ')) != -1:
         total_spaces_count = 1
-        for ltr in working_text[cur_index + 1:]:
+        for ltr in text[cur_index + 1:]:
             if ltr != ' ':
                 break
             total_spaces_count += 1
 
-        if total_spaces_count <= 3:
-            remained_spaces_count = total_spaces_count // 2
-            res_text += (
-                    working_text[:cur_index] +
-                    ' ' * remained_spaces_count
-            )
-        elif total_spaces_count > 3:
-            # new_start_index = cur_index + space_count
-            additional_len = (total_spaces_count - 3) // 2
-            cur_str = working_text[:cur_index]
+        if total_spaces_count <= len(found_val) + 1:
+            remained_spaces = ''
+            if total_spaces_count > 1:
+                remained_spaces = ' '
 
+            res_text += (
+                    text[:cur_index] +
+                    remained_spaces
+            )
+        elif total_spaces_count > len(found_val) + 1:
+            additional_len = (total_spaces_count - 3) // 2
+            cur_str = text[:cur_index]
+
+            # TODO: add line length
             res_text += (
                 cur_str +
                 f' (letters can be added: {additional_len})' +
                 '\n'
             )
-        working_text = working_text[cur_index + total_spaces_count:]
 
+        text = text[cur_index + total_spaces_count:]
     return res_text
 
 
