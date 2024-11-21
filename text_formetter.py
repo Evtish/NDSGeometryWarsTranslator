@@ -19,7 +19,6 @@ def format_text(text: str) -> str:
             additional_len = (total_spaces_count - 3) // 2
             cur_line += text[:cur_index]
 
-            # TODO: add line length
             res_text.append(
                     cur_line +
                     f' (ORIGINAL LENGTH: {len(cur_line)}, MAX LENGTH: {len(cur_line) + additional_len})' +
