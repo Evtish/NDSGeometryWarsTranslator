@@ -7,7 +7,7 @@ __all__ = (
 
 from os import PathLike, path, getcwd, listdir
 from typing import TypeVar
-from text_formetter import format_text
+from text_formatter import TextFormatter
 
 LangFileType = TypeVar('LangFileType', PathLike[bytes],  PathLike[str],  str)
 lang_file_encoding = 'utf-8'
