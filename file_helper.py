@@ -7,6 +7,7 @@ __all__ = (
 
 from os import PathLike, path, getcwd, listdir
 from typing import TypeVar
+from text_formetter import format_text
 
 LangFileType = TypeVar('LangFileType', PathLike[bytes],  PathLike[str],  str)
 lang_file_encoding = 'utf-8'
@@ -39,40 +40,6 @@ class FileConverter:
 
 def get_file_extension(file: LangFileType) -> str:
     return path.splitext(file)[1][1:]
-
-
-def format_text(text: str) -> str:
-    found_val = '  '
-    res_text = ''
-    while (cur_index := text.find(' ')) != -1:
-        total_spaces_count = 1
-        for ltr in text[cur_index + 1:]:
-            if ltr != ' ':
-                break
-            total_spaces_count += 1
-
-        if total_spaces_count <= len(found_val) + 1:
-            remained_spaces = ''
-            if total_spaces_count > 1:
-                remained_spaces = ' '
-
-            res_text += (
-                    text[:cur_index] +
-                    remained_spaces
-            )
-        elif total_spaces_count > len(found_val) + 1:
-            additional_len = (total_spaces_count - 3) // 2
-            cur_str = text[:cur_index]
-
-            # TODO: add line length
-            res_text += (
-                cur_str +
-                f' (letters can be added: {additional_len})' +
-                '\n'
-            )
-
-        text = text[cur_index + total_spaces_count:]
-    return res_text
 
 
 # def get_binary_code(file_bytes: bytes) -> str:
