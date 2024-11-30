@@ -7,7 +7,7 @@ __all__ = (
 
 from os import PathLike, path, getcwd, listdir
 from typing import TypeVar
-from text_formatter import BinaryFormatter, lang_file_encoding
+from text_formatter import FileFormatter, lang_file_encoding
 
 LangFileType = TypeVar('LangFileType', PathLike[bytes],  PathLike[str],  str)
 
@@ -17,7 +17,7 @@ class FileConverter:
         self._filename: LangFileType = filename
         # self._binary_file_data = self._read_binary_file()
         # self._text_file_data = self._read_text_file()
-        self._byte_text_formatter: BinaryFormatter = BinaryFormatter(self._read_binary_file())
+        self._byte_text_formatter: FileFormatter = FileFormatter(self._read_binary_file())
 
     def _read_binary_file(self) -> bytes:
         with open(self._filename, 'rb') as bin_file:
